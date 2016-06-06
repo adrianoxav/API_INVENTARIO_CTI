@@ -41,7 +41,7 @@ end
 owners_name = ["ESPOL","CTI","SENESCYT"]
 
 owners_name.length.times {|i|
-	Owner.create! name: owners_name[i], code: "#{owners_name[i]}"+Faker::Number
+	Owner.create! name: owners_name[i], code: "#{owners_name[i]}"<<"#{Faker::Number}"
 }
 
 owners = Owner.all
