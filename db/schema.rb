@@ -11,46 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601094958) do
+ActiveRecord::Schema.define(version: 20160605180337) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-  end
-
-  create_table "item_approvers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "item_id"
-    t.boolean  "state"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_item_approvers_on_item_id"
-    t.index ["user_id"], name: "index_item_approvers_on_user_id"
-  end
-
-  create_table "item_buyers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "item_id"
-    t.string   "value"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_item_buyers_on_item_id"
-    t.index ["user_id"], name: "index_item_buyers_on_user_id"
-  end
-
-  create_table "item_verifiers", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "item_id"
-    t.boolean  "state"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_item_verifiers_on_item_id"
-    t.index ["user_id"], name: "index_item_verifiers_on_user_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -61,6 +28,10 @@ ActiveRecord::Schema.define(version: 20160601094958) do
     t.string   "reference"
     t.string   "domain"
     t.string   "characteristics"
+    t.string   "mac"
+    t.string   "serie"
+    t.integer  "quantity"
+    t.float    "value"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -77,44 +48,12 @@ ActiveRecord::Schema.define(version: 20160601094958) do
     t.index ["owner_id", "item_id"], name: "index_items_owners_on_owner_id_and_item_id"
   end
 
-  create_table "kit_approvers", force: :cascade do |t|
-    t.integer  "kit_id"
-    t.integer  "user_id"
-    t.boolean  "approved"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["kit_id"], name: "index_kit_approvers_on_kit_id"
-    t.index ["user_id"], name: "index_kit_approvers_on_user_id"
-  end
-
-  create_table "kit_buyers", force: :cascade do |t|
-    t.integer  "kit_id"
-    t.integer  "user_id"
-    t.string   "value"
-    t.text     "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["kit_id"], name: "index_kit_buyers_on_kit_id"
-    t.index ["user_id"], name: "index_kit_buyers_on_user_id"
-  end
-
   create_table "kit_comments", force: :cascade do |t|
     t.string   "comments"
     t.integer  "kit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kit_id"], name: "index_kit_comments_on_kit_id"
-  end
-
-  create_table "kit_verifiers", force: :cascade do |t|
-    t.integer  "kit_id"
-    t.integer  "user_id"
-    t.boolean  "state"
-    t.text     "comments"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["kit_id"], name: "index_kit_verifiers_on_kit_id"
-    t.index ["user_id"], name: "index_kit_verifiers_on_user_id"
   end
 
   create_table "kits", force: :cascade do |t|
@@ -130,6 +69,7 @@ ActiveRecord::Schema.define(version: 20160601094958) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "item_id"
+    t.string   "serie"
     t.index ["item_id"], name: "index_kits_on_item_id"
   end
 

@@ -1,1 +1,14 @@
-json.extract! @kit, :id, :title, :kit_type,:number_elements, :state, :reference, :domain, :purpose, :comments, :created_at, :updated_at
+json.merge! @kit.attributes
+json.items do
+	json.array!(@kit.items)
+
+end
+json.owners do
+	json.array!(@kit.owners)
+end
+json.kit_comments do
+	json.array!(@kit.kit_comments)
+end
+
+
+

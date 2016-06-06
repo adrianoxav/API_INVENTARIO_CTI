@@ -8,7 +8,10 @@ class CreateItems < ActiveRecord::Migration[5.0]
       t.string :reference
       t.string :domain
       t.string :characteristics
-
+      t.string :mac
+      t.string :serie
+      t.integer :quantity
+      t.float :value
       t.timestamps
     end
   end

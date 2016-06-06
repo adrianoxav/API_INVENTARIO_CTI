@@ -11,57 +11,61 @@ Kit.destroy_all
 
 
 100.times do |i|
-	User.create!({firstname: "name-#{i+1}",
-	                      lastname: "last-#{i+1}",
-												username: "user-#{i+1}.#{i+1}",
-												password_digest: "asdadasdadad",
-												email: "user-#{i+1}@example.com",
+	User.create!({firstname: Faker::Name.first_name,
+	                      lastname: Faker::Name.last_name,
+												username: Faker::Internet.user_name,
+												password_digest: Faker::Internet.password,
+												email: Faker::Internet.email,
 												function: "function-#{i+1}",
-												phone: "00000000000",
+												phone: Faker::PhoneNumber.phone_number,
 												gender: ["Male","Female"].sample(),
-												cellphone: "0000000000000"
+												cellphone: Faker::PhoneNumber.cell_phone
 	             }		)
 
-	Item.create!({title: "item-#{i}",
-								code: "asdasdas",
-								item_type: ["desarrollo","prueba"].sample(),
+	item_type = ["elemento","dispositivo"].sample()
+
+	Item.create!({title: Faker::Commerce.product_name,
+								code: Faker::Code.asin,
+								item_type: item_type,
 								state: ["nuevo","usado"].sample(),
-								reference: "adsasdasdasd",
-	              domain: "Materias",
-	              characteristics: "asdasjdhjashdjashdjhasdjkashdkjahs"
-	             })
+								reference: Faker::Lorem.sentence,
+	              domain: Faker::Commerce.department,
+	              characteristics: Faker::Lorem.paragraph,
+                mac: item_type=="dispositivo"?Faker::Lorem.characters(10):nil,
+								serie: item_type=="dispositivo"?Faker::Lorem.characters(5):nil,
+								quantity:Faker::Number.between(1,100).to_i,
+								value: Faker::Number.decimal(2,3).to_i
+	})
 end
 
 owners_name = ["ESPOL","CTI","SENESCYT"]
 
 owners_name.length.times {|i|
-	Owner.create! name: owners_name[i], code: "#{owners_name[i]}-0001"
+	Owner.create! name: owners_name[i], code: "#{owners_name[i]}"+Faker::Number
 }
 
 owners = Owner.all
 items = Item.all
 
 50.times do |i|
-	 kit=Kit.create!({title: "kit-#{i}",
-							 number_elements:rand(10),
-							 code:"asdasdasdsd",
+	 kit=Kit.create!({title: Faker::Commerce.product_name,
+							 number_elements:Faker::Number.between(1,100).to_i,
+							 code:Faker::Lorem.characters(6),
                kit_type: ["desarrollo","prueba"].sample(),
                state: ["nuevo","usado"].sample(),
-               reference: "adsasdasdasd",
-               domain: "Materias",
-               purpose: "asdasdasdasdasdasd"
-
+               reference: Faker::Lorem.sentence,
+               domain: Faker::Educator.university,
+               purpose: Faker::Lorem.paragraph,
+               serie: Faker::Lorem.characters(7)
 	             })
 
-	 (rand(10)+1).times{ |i|
-		 kit.kit_comments.create!( comments:"asdasd-#{i}")
+	 Faker::Number.number(2).to_i.times{ |i|
+		 kit.kit_comments.create!( comments:Faker::Hipster.sentence)
 		 kit.items<<items.sample
 		 kit.owners<<owners.sample
+		 kit.save!
 	 }
 
-	 KitApprover.create! user:User.all.sample, kit:kit, approved:[true,false].sample
-	 KitBuyer.create! user:User.all.sample, kit:kit, value:"asdasdasd", comment:"agjsdhakjsdhjashdjkhaskdjhaskjdhkjsahdkjhasdjhaskdhakjshdkjasd"
-	 KitVerifier.create! user:User.all.sample, kit:kit, state:[true,false].sample, comments:"askldjkasjdkasjdksajdlkasjdljasdkjasdjkasld"
 end
 
 

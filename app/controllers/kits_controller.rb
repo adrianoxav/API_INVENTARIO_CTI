@@ -18,7 +18,7 @@ class KitsController < ApplicationController
     @kit = Kit.new(kit_params)
 
     if @kit.save
-      render :show, status: :created, location: @kit
+      render :show
     else
       render json: @kit.errors, status: :unprocessable_entity
     end
@@ -48,6 +48,6 @@ class KitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def kit_params
-      params.require(:kit).permit(:title, :kit_type,:number_elements, :state, :reference, :domain, :purpose, :comments)
+      params.fetch(:kit, {})
     end
 end

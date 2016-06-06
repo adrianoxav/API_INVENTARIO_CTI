@@ -31,6 +31,7 @@ group :development, :test do
   gem 'factory_girl_rails'
 
   gem 'rspec-rails'
+  gem 'faker', :git => "https://github.com/stympy/faker.git"
 
 end
 
@@ -44,7 +45,6 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-sidekiq'
   gem 'web-console', '~> 2.0'
-
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
